@@ -4,7 +4,7 @@ import { ClientOptions } from 'google-gax';
 import { ICryptoKeyVersion } from './interfaces/versionName';
 import { IAuthorize } from './interfaces/authorize';
 
-export class KmsAuthorizer {
+export class GcpKmsAuthorizer {
   private readonly signer: Signer;
 
   public constructor(
