@@ -1,14 +1,21 @@
 import { KeyManagementServiceClient } from '@google-cloud/kms';
 import { ClientOptions } from 'google-gax';
 
-import { parseSignature, parsePublicKey } from './asn1-parser';
+import { parseSignature, parsePublicKey } from '../util/asn1-parser';
 import { SHA3 } from 'sha3';
 import { google } from '@google-cloud/kms/build/protos/protos';
-import { ICryptoKeyVersion } from './interfaces/versionName';
-
+import { ICryptoKeyVersion } from '../interfaces/versionName';
+/**
+ * Contains functions that are used to call and process GCP KMS Client message signing and key fetching.
+ */
 export class Signer {
   private readonly client: KeyManagementServiceClient;
   private readonly versionName: string;
+  /**
+   * Creates a new Signer instance
+   * @param versionName Google KMS Client parameters (used for client.cryptoKeyVersionPath)
+   * @param clientOptions Google KMS Client Options
+   */
   public constructor(
     versionName: ICryptoKeyVersion,
     clientOptions?: ClientOptions
@@ -23,19 +30,30 @@ export class Signer {
       versionId
     );
   }
-
+  /**
+   * Fetches public key from the GCP KMS Client and asn1 decodes it.
+   * @returns a promise string public key in raw hex format
+   */
   public async getPublicKey(): Promise<string | undefined> {
     const asn1PublicKey = await this._getPublicKey();
     const publicKey = parsePublicKey(asn1PublicKey);
     return publicKey?.toString('hex').replace(/^04/, '');
   }
 
+  /**
+   * Hashes message using SHA3_256
+   * @param message message to be hashed
+   * @returns message sha digest
+   */
   private _hashMessage(message: string): Buffer {
     const sha = new SHA3(256);
     sha.update(Buffer.from(message, 'hex'));
     return sha.digest();
   }
-
+  /**
+   * Fetches public key from google client
+   * @returns returns google client public key
+   */
   private async _getPublicKey(): Promise<google.cloud.kms.v1.IPublicKey> {
     const [publicKey] = await this.client.getPublicKey({
       name: this.versionName,
@@ -55,6 +73,11 @@ export class Signer {
     return publicKey;
   }
 
+  /**
+   * Signs message using GCP KMS Client and parses the signature
+   * @param message message to be signed
+   * @returns hex encoded signed message string
+   */
   public async sign(message: string): Promise<string | undefined> {
     const digest = this._hashMessage(message);
     const asn1Signature = await this._sign(digest);
@@ -64,8 +87,12 @@ export class Signer {
     }
     return undefined;
   }
-
-  private async _sign(digest: Buffer) {
+  /**
+   * Signs message digest using GCP KMS Client
+   * @param digest sha message digest
+   * @returns signResponse Buffer
+   */
+  private async _sign(digest: Buffer): Promise<Buffer | undefined> {
     var crc32c = require('fast-crc32c');
     const digestCrc32c = crc32c.calculate(digest);
     const [signResponse] = await this.client.asymmetricSign({
@@ -94,9 +121,6 @@ export class Signer {
       throw new Error('AsymmetricSign: response corrupted in-transit');
     }
 
-    // Example of how to display signature. Because the signature is in a binary
-    // format, you need to encode the output before printing it to a console or
-    // displaying it on a screen.
     if (signResponse.signature) return Buffer.from(signResponse.signature);
     return undefined;
   }
