@@ -1,16 +1,17 @@
 import { KeyManagementServiceClient } from '@google-cloud/kms';
 import { ClientOptions } from 'google-gax';
-
 import { parseSignature, parsePublicKey } from '../util/asn1-parser';
 import { SHA3 } from 'sha3';
 import { google } from '@google-cloud/kms/build/protos/protos';
 import { ICryptoKeyVersion } from '../interfaces/versionName';
+
 /**
  * Contains functions that are used to call and process GCP KMS Client message signing and key fetching.
  */
 export class Signer {
   private readonly client: KeyManagementServiceClient;
   private readonly versionName: string;
+
   /**
    * Creates a new Signer instance
    * @param versionName Google KMS Client parameters (used for client.cryptoKeyVersionPath)
@@ -30,6 +31,7 @@ export class Signer {
       versionId
     );
   }
+
   /**
    * Fetches public key from the GCP KMS Client and asn1 decodes it.
    * @returns a promise string public key in raw hex format
@@ -50,6 +52,7 @@ export class Signer {
     sha.update(Buffer.from(message, 'hex'));
     return sha.digest();
   }
+
   /**
    * Fetches public key from google client
    * @returns returns google client public key
@@ -87,6 +90,7 @@ export class Signer {
     }
     return undefined;
   }
+
   /**
    * Signs message digest using GCP KMS Client
    * @param digest sha message digest

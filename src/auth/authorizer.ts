@@ -3,6 +3,7 @@ import { Signer } from './signer';
 import { ClientOptions } from 'google-gax';
 import { ICryptoKeyVersion } from '../interfaces/versionName';
 import { IAuthorize } from '../interfaces/authorize';
+
 /**
  * Provides GCP KMS Authorization functions.
  */
