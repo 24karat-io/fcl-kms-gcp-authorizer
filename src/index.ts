@@ -1,0 +1,1 @@
+export { KmsAuthorizer } from './authorizer';

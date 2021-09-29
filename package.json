@@ -1,0 +1,67 @@
+{
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
+    "public": "tsc --outDir dist src/test.ts && node dist/test.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "fcl-gcp-authorizer",
+  "author": "Luka Racki",
+  "module": "dist/fcl-gcp-authorizer.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/fcl-gcp-authorizer.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/fcl-gcp-authorizer.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@google-cloud/storage": "^5.14.4",
+    "@size-limit/preset-small-lib": "^5.0.4",
+    "husky": "^7.0.2",
+    "size-limit": "^5.0.4",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "@google-cloud/kms": "^2.8.1",
+    "@onflow/fcl": "^0.0.77",
+    "@types/asn1js": "^2.0.2",
+    "@types/pvutils": "^1.0.1",
+    "asn1js": "^2.1.1",
+    "fast-crc32c": "^2.0.0",
+    "google-gax": "^2.26.0",
+    "pvutils": "^1.0.17",
+    "sha3": "^2.1.4"
+  }
+}
