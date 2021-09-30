@@ -10,6 +10,7 @@ const apiUrl = 'https://access-testnet.onflow.org';
 fcl.config().put('accessNode.api', apiUrl);
 
 async function main() {
+  // Your GCP resourceId data goes here
   const versionName: ICryptoKeyVersion = {
     projectId: 'kitty-items-31210',
     locationId: 'global',
