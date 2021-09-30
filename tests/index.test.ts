@@ -7,6 +7,9 @@ import * as fcl from '@onflow/fcl';
 import { ICryptoKeyVersion } from '../src/types/interfaces/versionName';
 
 const apiUrl = 'http://localhost:8080';
+
+jest.mock('@google-cloud/kms');
+
 const publicKey =
   '8adf5d29ec027b64c1737e2cb1206143328c7792b98eb5a25203da20d34f5fa67848ccad9be5e2bc57ea5df3801a9ced02dd2faaa7a6ae902f18fde0d8aaef8a';
 const flowPublicKey =
@@ -14,16 +17,15 @@ const flowPublicKey =
 const privateKey =
   'e912bb5b687eba739da2a36dc8d121746c5809ae0fcab7e42f2562045fdad181';
 
-jest.mock('@google-cloud/kms');
-
-describe('KmsAuthorizer', () => {
+describe('GcpKmsAuthorizer', () => {
   test('should success', async () => {
+    console.log(privateKey);
     mocked(KMS).mockImplementation((): any => {
       return {
-        getPublicKey: (_param: any, callback: any) => {
+        getPublicKey: (_param: any, _callback: any) => {
           return { promise: () => '' };
         },
-        sign: (param: any, callback: any) => {
+        sign: (_param: any, _callback: any) => {
           return { promise: () => '' };
         },
       };
@@ -31,10 +33,16 @@ describe('KmsAuthorizer', () => {
     jest.spyOn(Signer.prototype, 'sign').mockImplementation(
       (message: string): Promise<string> => {
         return new Promise((resolve, _reject) =>
-          resolve(util.signWithKey(privateKey, message))
+          resolve(util.signWithKey(message))
         );
       }
     );
+    jest
+      .spyOn(Signer.prototype, 'getPublicKey')
+      .mockImplementation((): any => publicKey);
+    jest
+      .spyOn(Signer.prototype, 'getFlowPublicKey')
+      .mockImplementation((): any => flowPublicKey);
     jest
       .spyOn(Signer.prototype, 'getPublicKey')
       .mockImplementation((): any => publicKey);

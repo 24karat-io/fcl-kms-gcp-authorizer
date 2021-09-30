@@ -39,7 +39,13 @@ export function parseSignature(buf: Buffer) {
     return buf.slice(Math.max(buf.length - 32, 0));
   };
 
-  const r = getHex(values[0] as Integer);
-  const s = getHex(values[1] as Integer);
+  const r = _pad32(getHex(values[0] as Integer));
+  const s = _pad32(getHex(values[1] as Integer));
   return { r, s };
+}
+
+export function _pad32(buf: Buffer): Buffer {
+  const paddedBuf = Buffer.alloc(32);
+  buf.copy(paddedBuf, paddedBuf.length - buf.length);
+  return paddedBuf;
 }

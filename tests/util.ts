@@ -6,6 +6,9 @@ import * as types from '@onflow/types';
 const flowEmulatorConfig = require('../flow.json');
 const ec = new EC('p256');
 
+const realPrivateKey =
+  'e912bb5b687eba739da2a36dc8d121746c5809ae0fcab7e42f2562045fdad181';
+
 export class Util {
   constructor(apiUrl: string) {
     fcl.config().put('accessNode.api', apiUrl);
@@ -26,11 +29,11 @@ export class Util {
             account.addPublicKey(publicKey.decodeHex())
             // let key = PublicKey(
             //   publicKey: publicKey.decodeHex(),
-            //   signatureAlgorithm: SignatureAlgorithm.ECDSA_secp256k1
+            //   signatureAlgorithm: SignatureAlgorithm.ECDSA_P256
             // )
             // account.keys.add(
             //   publicKey: key,
-            //   hashAlgorithm: HashAlgorithm.SHA3_256,
+            //   hashAlgorithm: HashAlgorithm.SHA2_256,
             //   weight: 1.0
             // )
           }
@@ -54,7 +57,6 @@ export class Util {
 
   authorize({
     address,
-    privateKey,
     keyIndex,
   }: {
     address: string;
@@ -72,7 +74,7 @@ export class Util {
           return {
             addr: fcl.withPrefix(address),
             keyId: Number(keyIndex),
-            signature: await this.signWithKey(privateKey, data.message),
+            signature: await this.signWithKey(data.message),
           };
         },
       };
@@ -84,8 +86,8 @@ export class Util {
     return account;
   }
 
-  signWithKey(privateKey: string, msg: string) {
-    const key = ec.keyFromPrivate(Buffer.from(privateKey, 'hex'));
+  signWithKey(msg: string) {
+    const key = ec.keyFromPrivate(Buffer.from(realPrivateKey, 'hex'));
     const sig = key.sign(this.hashMsg(msg));
     const n = 32;
     const r = sig.r.toArrayLike(Buffer, 'be', n);
