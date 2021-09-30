@@ -65,6 +65,7 @@
     "@onflow/fcl": "^0.0.77",
     "@onflow/rlp": "^0.0.3",
     "@types/asn1js": "^2.0.2",
+    "@types/node": "^16.10.2",
     "@types/pvutils": "^1.0.1",
     "asn1js": "^2.1.1",
     "fast-crc32c": "^2.0.0",
