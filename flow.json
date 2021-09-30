@@ -7,34 +7,15 @@
 	},
 	"contracts": {},
 	"networks": {
-<<<<<<< HEAD
-		"emulator": {
-			"host": "127.0.0.1:3569",
-			"chain": "flow-emulator"
-		}
-=======
 		"emulator": "127.0.0.1:3569",
 		"mainnet": "access.mainnet.nodes.onflow.org:9000",
 		"testnet": "access.devnet.nodes.onflow.org:9000"
->>>>>>> fcl-gcp-kms-authorizer/main
 	},
 	"accounts": {
 		"emulator-account": {
 			"address": "f8d6e0586b0a20c7",
-<<<<<<< HEAD
-			"keys": "6b24f011e41c0f721605c9e2d4b6e781e50d7bc52c8a6407209aedb112e3f916",
-			"chain": "flow-emulator"
-		}
-	},
-	"deployments": {
-		"emulator": {
-			"emulator-account": []
-		}
-	}
-=======
 			"key": "12080131645bcbe1b9ff5b7f4f3588da525e5839a2ea58e41c8b8733e819cf03"
 		}
 	},
 	"deployments": {}
->>>>>>> fcl-gcp-kms-authorizer/main
 }
