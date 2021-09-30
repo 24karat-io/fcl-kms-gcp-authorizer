@@ -3,20 +3,22 @@ import { ICryptoKeyVersion } from '../src/types/interfaces/versionName';
 
 import * as fcl from '@onflow/fcl';
 
+// emulator url
 const apiUrl = 'http://localhost:8080';
 
 fcl.config().put('accessNode.api', apiUrl);
 
 async function main() {
-  // Your GCP resourceId data goes here
+  // Your GCP resourceId data
   const versionName: ICryptoKeyVersion = {
-    projectId: 'tfc-dev-318510',
+    projectId: 'my-project-id',
     locationId: 'global',
     keyRingId: 'flow',
     keyId: 'flow-minter-key',
     versionId: '1',
   };
 
+  // Your account key (emulator or testnet)
   const address = '0x179b6b1cb6755e31';
   const keyIndex = 0;
 
