@@ -1,5 +1,5 @@
-**/dist
-**/coverage
-**/node_modules
-**/yarn-error.log
-yarn-debug.log*
+*.log
+.DS_Store
+node_modules
+dist
+secret

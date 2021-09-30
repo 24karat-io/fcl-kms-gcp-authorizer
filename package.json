@@ -1,66 +1,83 @@
 {
-  "name": "fcl-kms-authorizer",
-  "version": "0.0.9",
-  "description": "AWS KMS authorizer (signer) for Flow blockchain.",
+  "version": "0.0.2",
+  "license": "MIT",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
   "files": [
-    "README.md",
     "dist",
-    "package.json",
-    "yarn.lock"
+    "src"
   ],
+  "engines": {
+    "node": ">=10"
+  },
   "scripts": {
-    "prebuild": "rm -rf dist",
-    "build": "tsc -p tsconfig.json",
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
     "test": "run-p test:*",
     "test:start-emulator": "docker-compose up",
     "test:execute": "sleep 2 && jest --forceExit && docker-compose down",
-    "prepublishOnly": "yarn build",
-    "example": "ts-node ./examples/send-tx.ts"
+    "example": "ts-node ./src/auth/send-tx.ts"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/doublejumptokyo/fcl-kms-authorizer.git"
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
   },
-  "keywords": [
-    "flow",
-    "kms",
-    "fcl",
-    "onflow",
-    "signer"
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "fcl-gcp-kms-authorizer",
+  "author": "Luka Racki",
+  "module": "dist/fcl-gcp-kms-authorizer.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/fcl-gcp-kms-authorizer.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/fcl-gcp-kms-authorizer.esm.js",
+      "limit": "10 KB"
+    }
   ],
-  "author": "double jump.tokyo Inc. <infra@doublejump.tokyo> (https://www.doublejump.tokyo)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/doublejumptokyo/fcl-kms-authorizer/issues"
-  },
-  "homepage": "https://github.com/doublejumptokyo/fcl-kms-authorizer#readme",
-  "dependencies": {
-    "@onflow/fcl": "^0.0.77",
-    "@onflow/rlp": "^0.0.3",
-    "@onflow/types": "^0.0.5",
-    "@types/asn1js": "^2.0.2",
-    "@types/bn.js": "^5.1.0",
-    "@types/keccak": "^3.0.1",
-    "@types/node": "^16.10.1",
-    "@types/secp256k1": "^4.0.3",
-    "asn1js": "^2.1.1",
-    "aws-sdk": "^2.996.0",
-    "bn.js": "^5.2.0",
-    "keccak": "^3.0.2",
-    "rlp": "^2.2.6",
-    "secp256k1": "^4.0.2",
-    "sha3": "^2.1.4",
-    "ts-node": "^10.2.1",
-    "typescript": "^4.4.3"
-  },
   "devDependencies": {
+    "@google-cloud/storage": "^5.14.4",
+    "@onflow/types": "^0.0.5",
+    "@size-limit/preset-small-lib": "^5.0.4",
     "@types/jest": "^27.0.2",
     "elliptic": "^6.5.4",
-    "jest": "^27.2.3",
+    "husky": "^7.0.2",
+    "jest": "^27.2.4",
     "npm-run-all": "^4.1.5",
-    "ts-jest": "^27.0.5"
+    "size-limit": "^5.0.4",
+    "ts-jest": "^27.0.5",
+    "ts-node": "^10.2.1",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "@google-cloud/kms": "^2.8.1",
+    "@onflow/fcl": "^0.0.77",
+    "@onflow/rlp": "^0.0.3",
+    "@types/asn1js": "^2.0.2",
+    "@types/pvutils": "^1.0.1",
+    "asn1js": "^2.1.1",
+    "crypto": "^1.0.1",
+    "fast-crc32c": "^2.0.0",
+    "google-gax": "^2.26.0",
+    "js-sha256": "^0.9.0",
+    "jssha": "^3.2.0",
+    "pvutils": "^1.0.17",
+    "sha2": "^1.0.2",
+    "sha3": "^2.1.4",
+    "simple-js-sha2-256": "^1.0.7"
   },
   "jest": {
     "testTimeout": 10000,

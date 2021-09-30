@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [![npm version](https://badge.fury.io/js/fcl-kms-authorizer.svg)](https://badge.fury.io/js/fcl-kms-authorizer)
 [![test](https://github.com/doublejumptokyo/fcl-kms-authorizer/actions/workflows/test.yml/badge.svg)](https://github.com/doublejumptokyo/fcl-kms-authorizer/actions/workflows/test.yml)
 
@@ -134,3 +135,10 @@ Also, if you want to use Flow Testnet Faucet, choose the following settings. (No
 This library is designed for backend or administrative frontend use; be careful not to expose your AWS access information to users.
 
 With the asymmetric keys in AWS KMS, no one can steal your private key. However, please be careful not to disclose access to the signing function to anyone.
+=======
+# GCP KMS Flow Authorizer
+
+A Google Cloud Platform, Key Management System Flow Blockchain Authorizer. Creates an authorization function by using Google KMS signing function.
+
+Forked from: https://github.com/doublejumptokyo/fcl-kms-authorizer
+>>>>>>> fcl-gcp-kms-authorizer/main

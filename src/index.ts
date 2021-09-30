@@ -1,1 +1,1 @@
-export * from './authorizer';
+export { GcpKmsAuthorizer } from './auth/authorizer';

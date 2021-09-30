@@ -1,34 +1,27 @@
-import * as fcl from '@onflow/fcl';
-import { KmsAuthorizer } from '../src/authorizer';
+import { GcpKmsAuthorizer } from '../src/auth/authorizer';
+import { ICryptoKeyVersion } from '../src/types/interfaces/versionName';
 
-const region = 'us-east-1';
-const keyId = 'xxxxx-xxxx-xxxx-xxxx-xxxxxxxx';
-const apiUrl = 'http://localhost:8080';
+import * as fcl from '@onflow/fcl';
+
+// testnet
+
+const apiUrl = 'https://access-testnet.onflow.org';
 
 fcl.config().put('accessNode.api', apiUrl);
 
 async function main() {
+  const versionName: ICryptoKeyVersion = {
+    projectId: 'tfc-dev-318510',
+    locationId: 'global',
+    keyRingId: 'flow',
+    keyId: 'flow-minter-key',
+    versionId: '1',
+  };
 
-  // Create an instance of the authorizer
-  const authorizer = new KmsAuthorizer({ region }, keyId);
-  //
-  // * The first argument can be the same as the option for AWS client.
-  //   Example:
-  //     const authorizer = new KmsAuthorizer({
-  //       credentials: new AWS.Credentials(
-  //         <AWS_ACCESS_KEY_ID>,
-  //         <AWS_SECRET_ACCESS_KEY>
-  //       ),
-  //       region
-  //     }, keyId);
-  //
-
-  // Sign and send transactions with KMS
-  //
-
-  // `address` and `keyIndex` obtained when the account was created.
-  const address = '01cf0e2f2f715450';
+  const address = '0xfa5c16369bca3cfd';
   const keyIndex = 0;
+
+  const authorizer = new GcpKmsAuthorizer(versionName);
 
   const authorization = authorizer.authorize(address, keyIndex);
 
@@ -46,9 +39,17 @@ async function main() {
     fcl.payer(authorization),
     fcl.limit(9999),
   ]);
-  await fcl.tx(response).onceSealed();
+  console.log(await fcl.tx(response).onceSealed());
 
   console.log('Transaction Succeeded');
+
+  const publicKey = await authorizer.getPublicKey();
+
+  const flowPublicKey = await authorizer.getFlowPublicKey();
+
+  console.log(publicKey);
+
+  console.log(flowPublicKey);
 }
 
 main().catch(e => console.error(e));
