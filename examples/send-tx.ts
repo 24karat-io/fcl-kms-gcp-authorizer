@@ -11,7 +11,7 @@ fcl.config().put('accessNode.api', apiUrl);
 async function main() {
   // Your GCP resourceId data
   const versionName: ICryptoKeyVersion = {
-    projectId: 'my-project-id',
+    projectId: 'your-project-id',
     locationId: 'global',
     keyRingId: 'flow',
     keyId: 'flow-minter-key',
@@ -19,7 +19,7 @@ async function main() {
   };
 
   // Your account key (emulator or testnet)
-  const address = '0x179b6b1cb6755e31';
+  const address = '0x01cf0e2f2f715450';
   const keyIndex = 0;
 
   const authorizer = new GcpKmsAuthorizer(versionName);
