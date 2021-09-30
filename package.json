@@ -13,12 +13,7 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
-    "example": "docker-compose up tsc --outDir dist examples/send-tx.ts && node dist/examples/send-tx.js",
-    "test": "run-p test:*",
-    "test:start-emulator": "docker-compose up",
-    "test:execute": "sleep 2 && jest --forceExit && docker-compose down"
+    "example": "docker-compose up tsc --outDir dist examples/send-tx.ts && node dist/examples/send-tx.js"
   },
   "husky": {
     "hooks": {
