@@ -1,8 +1,8 @@
 import * as fcl from '@onflow/fcl';
 import { Signer } from './signer';
 import { ClientOptions } from 'google-gax';
-import { ICryptoKeyVersion } from '../interfaces/versionName';
-import { IAuthorize } from '../interfaces/authorize';
+import { ICryptoKeyVersion } from '../types/interfaces/versionName';
+import { IAuthorize } from '../types/interfaces/authorize';
 
 /**
  * Provides GCP KMS Authorization functions.
@@ -23,11 +23,19 @@ export class GcpKmsAuthorizer {
   }
 
   /**
-   * Used to fetch the public key from the GCP KMS Client
+   * Fetch the public key from the GCP KMS Client
    * @returns a promise string public key in raw hex format
    */
   public async getPublicKey(): Promise<string | undefined> {
     return await this.signer.getPublicKey();
+  }
+
+  /**
+   * Get the RLP Enconded Flow Public Key
+   * @returns Flow Public Key hex encoded string
+   */
+  public async getFlowPublicKey(): Promise<string | undefined> {
+    return await this.signer.getFlowPublicKey();
   }
 
   /**

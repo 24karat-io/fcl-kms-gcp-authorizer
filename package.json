@@ -13,11 +13,14 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "analyze": "size-limit --why",
+    "test": "run-p test:*",
+    "test:start-emulator": "docker-compose up",
+    "test:execute": "sleep 2 && jest --forceExit && docker-compose down",
+    "example": "ts-node ./src/auth/send-tx.ts"
   },
   "husky": {
     "hooks": {
@@ -45,9 +48,16 @@
   ],
   "devDependencies": {
     "@google-cloud/storage": "^5.14.4",
+    "@onflow/types": "^0.0.5",
     "@size-limit/preset-small-lib": "^5.0.4",
+    "@types/jest": "^27.0.2",
+    "elliptic": "^6.5.4",
     "husky": "^7.0.2",
+    "jest": "^27.2.4",
+    "npm-run-all": "^4.1.5",
     "size-limit": "^5.0.4",
+    "ts-jest": "^27.0.5",
+    "ts-node": "^10.2.1",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
     "typescript": "^4.4.3"
@@ -55,12 +65,33 @@
   "dependencies": {
     "@google-cloud/kms": "^2.8.1",
     "@onflow/fcl": "^0.0.77",
+    "@onflow/rlp": "^0.0.3",
     "@types/asn1js": "^2.0.2",
     "@types/pvutils": "^1.0.1",
     "asn1js": "^2.1.1",
+    "crypto": "^1.0.1",
     "fast-crc32c": "^2.0.0",
     "google-gax": "^2.26.0",
+    "js-sha256": "^0.9.0",
+    "jssha": "^3.2.0",
     "pvutils": "^1.0.17",
-    "sha3": "^2.1.4"
+    "sha2": "^1.0.2",
+    "sha3": "^2.1.4",
+    "simple-js-sha2-256": "^1.0.7"
+  },
+  "jest": {
+    "testTimeout": 10000,
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "html"
+    ],
+    "testMatch": [
+      "**/tests/**/*.test.ts"
+    ]
   }
 }

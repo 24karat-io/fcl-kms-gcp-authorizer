@@ -1,9 +1,9 @@
 import { KeyManagementServiceClient } from '@google-cloud/kms';
 import { ClientOptions } from 'google-gax';
 import { parseSignature, parsePublicKey } from '../util/asn1-parser';
-import { SHA3 } from 'sha3';
 import { google } from '@google-cloud/kms/build/protos/protos';
-import { ICryptoKeyVersion } from '../interfaces/versionName';
+import { ICryptoKeyVersion } from '../types/interfaces/versionName';
+import * as rlp from '@onflow/rlp';
 
 /**
  * Contains functions that are used to call and process GCP KMS Client message signing and key fetching.
@@ -48,7 +48,8 @@ export class Signer {
    * @returns message sha digest
    */
   private _hashMessage(message: string): Buffer {
-    const sha = new SHA3(256);
+    var crypto = require('crypto');
+    const sha = crypto.createHash('sha256');
     sha.update(Buffer.from(message, 'hex'));
     return sha.digest();
   }
@@ -88,6 +89,22 @@ export class Signer {
       const { r, s } = parseSignature(asn1Signature);
       return Buffer.concat([r, s]).toString('hex');
     }
+    return undefined;
+  }
+
+  public async getFlowPublicKey(): Promise<string | undefined> {
+    const asn1PublicKey = await this._getPublicKey();
+    const publicKey = parsePublicKey(asn1PublicKey);
+    if (publicKey)
+      // ref. https://github.com/onflow/flow/blob/f678a4/docs/content/concepts/accounts-and-keys.md#supported-signature--hash-algorithms
+      return rlp
+        .encode([
+          Buffer.from(publicKey.toString('hex'), 'hex'),
+          2, // Signature Algorithm: ECDSA_P256
+          1, // Hash Algorithm: SHA2_256
+          1000, // Weight
+        ])
+        .toString('hex');
     return undefined;
   }
 
