@@ -11,7 +11,7 @@ fcl.config().put('accessNode.api', apiUrl);
 
 async function main() {
   const versionName: ICryptoKeyVersion = {
-    projectId: 'tfc-dev-318510',
+    projectId: 'kitty-items-31210',
     locationId: 'global',
     keyRingId: 'flow',
     keyId: 'flow-minter-key',
