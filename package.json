@@ -1,15 +1,30 @@
 {
-  "version": "0.0.2",
+  "version": "0.0.1b-alpha",
   "license": "MIT",
   "main": "dist/index.js",
+  "description": "GCP KMS authorizer for Flow blockchain.",
   "typings": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "files": [
+    "README.md",
     "dist",
-    "src"
+    "package.json",
+    "yarn.lock"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukaracki/fcl-kms-gcp-authorizer.git"
+  },
   "engines": {
     "node": ">=10"
   },
+  "keywords": [
+    "flow",
+    "gcp",
+    "fcl",
+    "onflow",
+    "signer"
+  ],
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
@@ -27,8 +42,12 @@
     "trailingComma": "es5"
   },
   "name": "fcl-gcp-kms-authorizer",
-  "author": "Luka Racki",
+  "author": "Luka Racki <luka@racki.dev>",
   "module": "dist/fcl-gcp-kms-authorizer.esm.js",
+  "bugs": {
+    "url": "https://github.com/lukaracki/fcl-kms-gcp-authorizer/issues"
+  },
+  "homepage": "https://github.com/lukaracki/fcl-kms-gcp-authorizer#readme",
   "size-limit": [
     {
       "path": "dist/fcl-gcp-kms-authorizer.cjs.production.min.js",
