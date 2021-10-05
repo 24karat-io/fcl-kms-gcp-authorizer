@@ -1,4 +1,4 @@
-> :warning: **This repository is currently in a pre-release version**: not production ready, use at ur own risk hehe :).
+> :warning: **This repository is currently in a pre-release version**: not production ready. :warning: 
 > 
 # GCP KMS Flow Authorizer
 
@@ -6,4 +6,4 @@ A Google Cloud Platform, Key Management System Flow Blockchain Authorizer. Creat
 
 Forked from: https://github.com/doublejumptokyo/fcl-kms-authorizer
 
-> :8ball: **Use Guide coming soon** 🚀
+>  🚀 **Usage guide will be available soon** 🚀
