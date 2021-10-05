@@ -6,4 +6,4 @@ A Google Cloud Platform, Key Management System Flow Blockchain Authorizer. Creat
 
 Forked from: https://github.com/doublejumptokyo/fcl-kms-authorizer
 
-> :8ball: Full README & usage guide coming soon 🚀
+> :8ball: **Use Guide coming soon** 🚀
