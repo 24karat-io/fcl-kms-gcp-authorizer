@@ -1,4 +1,4 @@
-> :warning: **This repository is currently in it's pre-release version**: not production ready, a npm package will be created soon
+> :warning: **This repository is currently in it's pre-release version**: not production ready.
 > 
 # GCP KMS Flow Authorizer
 
