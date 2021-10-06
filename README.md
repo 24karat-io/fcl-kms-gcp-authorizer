@@ -33,6 +33,7 @@ After creating your key, you need to get the key's resource name. The reosource 
 ```ts
 const resourceId: string = {yourResourceName}
 // e.g -> 'projects/your-project-name/locations/global/keyRings/flow/cryptoKeys/flow-minter-key'
+const authorizer = new GcpKmsAuthorizer(resourceId);
 ```
 
 Using the @google-cloud/kms library requires authentication with google. It is recommended to use an environment variable to set up the authentication using a google account authentication JSON file. This variable only applies to your current shell session, so if you open a new session, set the variable again.
