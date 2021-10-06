@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1c-alpha",
+  "version": "0.0.1",
   "license": "MIT",
   "main": "dist/index.js",
   "description": "GCP KMS authorizer for Flow blockchain.",
