@@ -4,13 +4,13 @@ A Google Cloud Platform Key Management System Flow Blockchain Authorizer. This l
 
 > Forked from: https://github.com/doublejumptokyo/fcl-kms-authorizer
 
-In order to use this package, the following steps have to be completed:
+To use this package, the following steps have to be completed:
 
 1. [Installation](https://github.com/lukaracki/fcl-kms-gcp-authorizer/#installation)
 1. [GCP KMS Setup](https://github.com/lukaracki/fcl-kms-gcp-authorizer/#GCP-KMS-Setup)
 2. [Flow Account Creation using **_GCP KMS Raw Hex Key_**](https://github.com/lukaracki/fcl-kms-gcp-authorizer/#flow-account-creation)
 
-When you've completed the steps above you can use this library to sign transactions from the created Flow account using the key you've setup via GCP KMS.
+When you've completed the steps above you can use this library to sign transactions from the created Flow account using the key you've set up via GCP KMS.
 
 ## Installation
 
@@ -20,13 +20,13 @@ $ npm install fcl-gcp-kms-authorizer
 
 ## GCP KMS Setup
 
-This library uses **_ECDSA_P256_ , _SHA2_256_** based keys. You need to generate a key in the GCP KMS with the following settings:
+This library uses **_ECDSA_P256_, _SHA2_256_** based keys. You need to generate a key in the GCP KMS with the following settings:
 
 * Protection level: Software
 * Purpose: Asymmetric sign
 * Default algorithm: **_Elliptic Curve P-256 key, SHA256 Digest_**
 
-> Google Cloud Documenation for Creating Keys: https://cloud.google.com/kms/docs/managing-external-keys#console
+> Google Cloud Documentation for Creating Keys: https://cloud.google.com/kms/docs/managing-external-keys#console
 
 After creating your key, you need to get the key's resource name. The reosource name is used to create an authorizer instance, see the example file [send-tx.ts](https://github.com/lukaracki/fcl-kms-gcp-authorizer/blob/main/examples/send-tx.ts).
 
@@ -35,7 +35,7 @@ const resourceId: string = {yourResourceName}
 // e.g -> 'projects/your-project-name/locations/global/keyRings/flow/cryptoKeys/flow-minter-key'
 ```
 
-Using the @google-cloud/kms library requries authentication with google. It is recommended to use an enviroment variable to setup the authentication using a google acocunt authentication JSON file. This variable only applies to your current shell session, so if you open a new session, set the variable again.
+Using the @google-cloud/kms library requires authentication with google. It is recommended to use an environment variable to set up the authentication using a google account authentication JSON file. This variable only applies to your current shell session, so if you open a new session, set the variable again.
 
 ```bash
 $ export GOOGLE_APPLICATION_CREDENTIALS= "PATH"
@@ -56,7 +56,7 @@ To create an account on the flow blockchain you need to specify a 128 hexadecima
   - Ref: https://docs.onflow.org/flow-go-sdk/creating-accounts
 - Using Flow JavaScript SDK
 
-To obtain the public key needed to create an account, you can use the getPublickKey() method which returns a 128 character hexadecimal string.
+To obtain the public key needed to create an account, you can use the getPublicKey() method which returns a 128 character hexadecimal string.
 
 ```ts
 // Get the public key
@@ -132,7 +132,7 @@ main().catch(e => console.error(e));
 ## Security Caveats
 
 > This library is designed for backend or administrative frontend use; be careful not to expose your GCP access information to users.
-With the asymmetric keys in GCP KMS, no one can steal your private key. However, please be careful not to disclose access to the signing function to anyone.
+With the asymmetric keys in GCP KMS, no one can steal your private key. However, please be careful not to disclose the access to the signing function to anyone.
 
 ## Credits
 
