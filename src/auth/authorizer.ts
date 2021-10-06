@@ -1,7 +1,6 @@
 import * as fcl from '@onflow/fcl';
 import { Signer } from './signer';
 import { ClientOptions } from 'google-gax';
-import { ICryptoKeyVersion } from '../types/interfaces/versionName';
 import { IAuthorize } from '../types/interfaces/authorize';
 
 /**
@@ -12,14 +11,11 @@ export class GcpKmsAuthorizer {
 
   /**
    * Creates a new GCP KMS Authorizer instance
-   * @param versionName Google KMS Client parameters (used for client.cryptoKeyVersionPath)
+   * @param resourceId Google KMS Client resourceId
    * @param clientOptions Google KMS Client Options
    */
-  public constructor(
-    versionName: ICryptoKeyVersion,
-    clientOptions?: ClientOptions
-  ) {
-    this.signer = new Signer(versionName, clientOptions);
+  public constructor(resourceId: string, clientOptions?: ClientOptions) {
+    this.signer = new Signer(resourceId, clientOptions);
   }
 
   /**

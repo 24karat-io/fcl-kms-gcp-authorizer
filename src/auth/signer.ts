@@ -2,7 +2,6 @@ import { KeyManagementServiceClient } from '@google-cloud/kms';
 import { ClientOptions } from 'google-gax';
 import { parseSignature, parsePublicKey } from '../util/asn1-parser';
 import { google } from '@google-cloud/kms/build/protos/protos';
-import { ICryptoKeyVersion } from '../types/interfaces/versionName';
 import * as rlp from '@onflow/rlp';
 
 /**
@@ -10,31 +9,17 @@ import * as rlp from '@onflow/rlp';
  */
 export class Signer {
   private readonly client: KeyManagementServiceClient;
-  private readonly versionName: string;
+  private readonly resourceId: string;
 
   /**
    * Creates a new Signer instance
-   * @param versionName Google KMS Client parameters (used for client.cryptoKeyVersionPath)
+   * @param resourceId Google KMS Client resourceId
    * @param clientOptions Google KMS Client Options
    */
-  public constructor(
-    versionName: ICryptoKeyVersion,
-    clientOptions?: ClientOptions
-  ) {
-    const { projectId, locationId, keyRingId, keyId, versionId } = versionName;
+  public constructor(resourceId: string, clientOptions?: ClientOptions) {
     this.client = new KeyManagementServiceClient(clientOptions);
     // Create clnet.cryptoKeyVersion String full resource Id
-    this.versionName =
-      'projects/' +
-      projectId +
-      '/locations/' +
-      locationId +
-      '/keyRings/' +
-      keyRingId +
-      '/cryptoKeys/' +
-      keyId +
-      '/cryptoKeyVersions/' +
-      versionId;
+    this.resourceId = resourceId;
   }
 
   /**
@@ -65,13 +50,13 @@ export class Signer {
    */
   private async _getPublicKey(): Promise<google.cloud.kms.v1.IPublicKey> {
     const [publicKey] = await this.client.getPublicKey({
-      name: this.versionName,
+      name: this.resourceId,
     });
 
     // For more details on ensuring E2E in-transit integrity to and from Cloud KMS visit:
     // https://cloud.google.com/kms/docs/data-integrity-guidelines
     var crc32c = require('fast-crc32c');
-    if (publicKey.name !== this.versionName) {
+    if (publicKey.name !== this.resourceId) {
       throw new Error('GetPublicKey: request corrupted in-transit');
     }
     if (
@@ -122,7 +107,7 @@ export class Signer {
     var crc32c = require('fast-crc32c');
     const digestCrc32c = crc32c.calculate(digest);
     const [signResponse] = await this.client.asymmetricSign({
-      name: this.versionName,
+      name: this.resourceId,
       digest: {
         sha256: digest,
       },
@@ -134,7 +119,7 @@ export class Signer {
     // Optional, but recommended: perform integrity verification on signResponse.
     // For more details on ensuring E2E in-transit integrity to and from Cloud KMS visit:
     // https://cloud.google.com/kms/docs/data-integrity-guidelines
-    if (signResponse.name !== this.versionName) {
+    if (signResponse.name !== this.resourceId) {
       throw new Error('AsymmetricSign: request corrupted in-transit');
     }
     if (!signResponse.verifiedDigestCrc32c) {

@@ -1,6 +1,6 @@
 import { mocked } from 'ts-jest/utils';
 import { KeyManagementServiceClient } from '@google-cloud/kms';
-import { GcpKmsAuthorizer, ICryptoKeyVersion } from '../src/index';
+import { GcpKmsAuthorizer } from '../src/index';
 import { Signer } from '../src/auth/signer';
 import { Util } from './util';
 import * as fcl from '@onflow/fcl';
@@ -46,15 +46,11 @@ describe('GcpKmsAuthorizer', () => {
     const address = await util.createFlowAccount(flowPublicKey);
     const keyIndex = 0;
 
-    const versionName: ICryptoKeyVersion = {
-      projectId: 'tfc-dev-318510',
-      locationId: 'global',
-      keyRingId: 'flow',
-      keyId: 'flow-minter-key',
-      versionId: '1',
-    };
+    // Your GCP resourceId
+    const resourceId: string =
+      'projects/your-project-id/locations/global/keyRings/flow/cryptoKeys/flow-minter-key/cryptoKeyVersions/1';
 
-    const authorizer = new GcpKmsAuthorizer(versionName);
+    const authorizer = new GcpKmsAuthorizer(resourceId);
 
     expect(await authorizer.getPublicKey()).toBe(publicKey);
     expect(await authorizer.getFlowPublicKey()).toBe(flowPublicKey);
