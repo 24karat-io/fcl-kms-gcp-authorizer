@@ -4,7 +4,7 @@ A Google Cloud Platform Key Management System Flow Blockchain Authorizer. This l
 
 > Forked from: https://github.com/doublejumptokyo/fcl-kms-authorizer
 
-To use this package, the following steps have to be completed:
+To use this library, the following steps have to be completed:
 
 1. [Installation](https://github.com/lukaracki/fcl-kms-gcp-authorizer/#installation)
 1. [GCP KMS Setup](https://github.com/lukaracki/fcl-kms-gcp-authorizer/#GCP-KMS-Setup)
