@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1b-alpha",
+  "version": "0.0.1c-alpha",
   "license": "MIT",
   "main": "dist/index.js",
   "description": "GCP KMS authorizer for Flow blockchain.",
@@ -48,20 +48,9 @@
     "url": "https://github.com/lukaracki/fcl-kms-gcp-authorizer/issues"
   },
   "homepage": "https://github.com/lukaracki/fcl-kms-gcp-authorizer#readme",
-  "size-limit": [
-    {
-      "path": "dist/fcl-gcp-kms-authorizer.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/fcl-gcp-kms-authorizer.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "devDependencies": {
     "@google-cloud/storage": "^5.14.4",
     "@onflow/types": "^0.0.5",
-    "@size-limit/preset-small-lib": "^5.0.4",
     "@types/jest": "^27.0.2",
     "elliptic": "^6.5.4",
     "husky": "^7.0.2",
@@ -82,7 +71,6 @@
     "@types/pvutils": "^1.0.1",
     "asn1js": "^2.1.1",
     "fast-crc32c": "^2.0.0",
-    "google-gax": "^2.26.0",
     "pvutils": "^1.0.17",
     "sha3": "^2.1.4"
   },
