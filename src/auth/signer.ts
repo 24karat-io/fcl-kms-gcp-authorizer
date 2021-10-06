@@ -23,13 +23,18 @@ export class Signer {
   ) {
     const { projectId, locationId, keyRingId, keyId, versionId } = versionName;
     this.client = new KeyManagementServiceClient(clientOptions);
-    this.versionName = this.client.cryptoKeyVersionPath(
-      projectId,
-      locationId,
-      keyRingId,
-      keyId,
-      versionId
-    );
+    // Create clnet.cryptoKeyVersion String full resource Id
+    this.versionName =
+      'projects/' +
+      projectId +
+      '/locations/' +
+      locationId +
+      '/keyRings/' +
+      keyRingId +
+      '/cryptoKeys/' +
+      keyId +
+      '/cryptoKeyVersions/' +
+      versionId;
   }
 
   /**
@@ -43,7 +48,7 @@ export class Signer {
   }
 
   /**
-   * Hashes message using SHA3_256
+   * Hashes message using SHA2_256
    * @param message message to be hashed
    * @returns message sha digest
    */

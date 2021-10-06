@@ -28,7 +28,12 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "example": "docker-compose up tsc --outDir dist examples/send-tx.ts && node dist/examples/send-tx.js"
+    "example": "run-p example:*",
+    "example:start-emulator": "docker-compose up",
+    "example:execture": " tsc --outDir dist examples/send-tx.ts && node dist/examples/send-tx.js",
+    "test": "run-p test:*",
+    "test:start-emulator": "docker-compose up",
+    "test:execute": "sleep 2 && jest --forceExit && docker-compose down"
   },
   "husky": {
     "hooks": {
