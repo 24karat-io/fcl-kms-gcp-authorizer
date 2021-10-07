@@ -25,7 +25,7 @@ async function main() {
     fcl.transaction`
       transaction {
         prepare(signer: AuthAccount) {
-          log("Test transaction signed by fcl-kms-authorizer")
+          log("Test transaction signed by fcl-gcp-kms-authorizer")
         }
       }
     `,
