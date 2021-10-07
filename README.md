@@ -26,7 +26,7 @@ This library uses **_ECDSA_P256_, _SHA2_256_** based keys. You need to generate 
 * Purpose: Asymmetric sign
 * Default algorithm: **_Elliptic Curve P-256 key, SHA256 Digest_**
 
-> Google Cloud Documentation for Creating Keys: https://cloud.google.com/kms/docs/managing-external-keys#console
+> Google Cloud Documentation for Creating Keys: https://cloud.google.com/kms/docs/creating-asymmetric-keys
 
 After creating your key, you need to get the key's resource name. The reosource name is used to create an authorizer instance, see the example file [send-tx.ts](https://github.com/lukaracki/fcl-kms-gcp-authorizer/blob/main/examples/send-tx.ts).
 
